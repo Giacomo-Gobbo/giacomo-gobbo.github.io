@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>Original paper</title>
+        <link rel="stylesheet" type="text/css" href="foglio_di_stile.css">
+        <link rel="icon" href="Images/gauss-icona.png">
+    </head>
+    <body>
+        <div id="div_topbar">
+            <table id="topbar">
+                <tr>
+                    <td><a href="index.html">Gauss and the Fast Fourier Transform</a></td>
+                    <td><a href="original_paper.html">Original paper</a></td>
+                    <td><a href="who_is_Gauss.html">Who is Gauss?</a></td>
+                    <td id="gauss-icona"><a href="who_is_Gauss.html"><img src="Images/gauss-story.png"></a></td>
+                </tr>
+           </table>
+        </div>
+        <a id="popup" href="Gauss_History_FFT.pdf" onClick="return popup(this, 'notes')">Open in a new page</a>
+        <embed src="Gauss_History_FFT.pdf" type="application/pdf">
+        <a href="who_is_Gauss.html"><img id="gauss-footer" src="https://github.com/Giacomo-Gobbo/giacomo-gobbo.github.io/blob/main/carl-friedrich-gauss-icon.png?raw=true"></a>
+        <footer>Created by Gobbo Giacomo</footer>
+    </body>
+    <script type="text/javascript">
+      function popup(mylink, windowname) {
+          if (! window.focus) return true;
+          var href;
+          if (typeof(mylink) == 'string') href = mylink;
+          else href=mylink.href;
+          window.open(href, windowname, 'width=1000, height=600, scrollbars=yes');
+          return false; 
+      }
+    </script>
+</html>
