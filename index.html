@@ -1,0 +1,131 @@
+<html>
+    <head>
+        <title>Gauss and the FFT</title>
+        <link rel="stylesheet" type="text/css" href="foglio_di_stile.css">
+        <link rel="icon" href="Images/gauss-icona.png">
+    </head>
+    <body>
+        <div id="div_topbar">
+            <table id="topbar">
+                <tr>
+                    <td><a href="index.html">Gauss and the Fast Fourier Transform</a></td>
+                    <td><a href="original_paper.html">Original paper</a></td>
+                    <td><a href="who_is_Gauss.html">Who is Gauss?</a></td>
+                </tr>
+           </table>
+        </div>
+        <div id="space"></div>
+        <h1 id="indice"><tt>INDICE</tt></h1>
+        <ul id="elenco-indice">
+            <li><a href="#introduction">INTRODUCTION</a></li>
+            <li><a href="#the-background-of-gauss-work">THE BACKGROUND OF GAUSS' WORK</a></li>
+            <li><a href="#gauss-algorithm-for-computing-the-dft">GAUSS' ALGORITHM FOR COMPUTING THE DFT</a></li>
+            <li><a href="#conclusion">CONCLUSION</a></li>
+        </ul>
+        <h1 id="introduction"><tt>INTRODUCTION</tt><a id="introduction-trigger" class="trigger">(hide)</a></h1>
+        <p id="introduction-paragraph-one" class="paragraph">
+            The Fast Fourier Transform (FFT) has become well known as a very efficient algorithm for calculating the Discrete Fourier Transform (DFT) of a sequence of N numbers. The DFT is used in many disciplines to obtain the spectrum or frequency content of a Signal, and to facilitate the computation of discrete convolution and correlation. Indeed, published work on the FFT algorithm as a means of calculating the FFT, by J. W. Cooley and J. W. Tukey in 1965, was a turning point in digital signal processing and in certain areas of numerical analysis. They showed that the FFT, which was previously thought to require N<sup>2</sup> arithmetic operations, could be calculated by the new FFT algorithm using only N log(N) operations. This algorithm had a revolutionary effect on many digital processing methods and remains the most Widely used method of computing Fourier transforms. In their original paper, Cooley and Tukey referred only to I. J. Good's work published in 1958 as having influenced their development.<br>
+            H. H. Goldstine in “A History of Numerical Analysis from the 16th Through the 19th Century” attributes to Carl Friedrich Gauss, the eminent German mathematician, an algorithm similar to the FFT for the computation of the coefficients of a finite Fourier series. Gauss' treatise describing the algorithm was not published in his lifetime, it appeared only in his collected works as an unpublished manuscript. The presumed year of the composition of this treatise is 1805, thereby suggesting that efficient algorithms for evaluating coefficients of Fourier series were developed at least a century earlier than had been thought previously. If this year is accurate, it predates Fourier's 1807 work on harmonic analysis.<br>
+            On p. 249 of A History of Numerical Analysis from the 16th Through the 19th Century by Herman H. Goldstine, the following footnote appears:
+        </p>
+        <p id="quote"><i>&#10077 This fascinating work of Gauss was neglected and was rediscovered<br> by Cooley and Tukey in an Important paper in 1965.&#10078</i></p>
+        <p id="introduction-paragraph-three" class="paragraph">
+            This quotation refers to the treatise written by Gauss (1777-1855) entitled "Theoria Interpolationis Methodo Nova Tractata”; this was published posthumously in volume 3 of his collected works in 1866, but was originally written, most likely, in 1805. Goldstine gives on p. 249-253 an English translation of parts of Gauss' paper related to trigonometric interpolation algorithms, which are Articles 25-28 of the original latin text. Gauss wrote his important works and his personal mathematical diary in a nineteenth-century version of latin which is now called neo-latin. Another source of difficulty for the modern reader is the notation adopted by Gauss to describe his method. Gauss' method was also derived using real trigonometric functions rather than complex exponentials, making it more difficult to relate his method to current FFT techniques.<br>
+            At this point, there are three questions to be addressed. Was the method used by Gauss a form of what is now called an FFT? Did Gauss realize he had developed a computationally efficient algorithm?
+        </p>
+        <h1 id="the-background-of-gauss-work"><tt>THE BACKGROUND OF GAUSS' WORK</tt><a id="background-trigger" class="trigger">(hide)</a></h1>
+        <p id="background-paragraph-one" class="paragraph">
+            The analysis of a trigonometric series goes back at least to the work of Leonhard Euler (1707-1783). The stature of Euler in his own time meant that his work was read by his contemporaries, particularly the French mathematicians Clairaut, d'Alembert, and Lagrange. Alexis-Claude Clairaut (1713-1765) published in 1754 what we currently believe to be the earliest formula for the DFT, but it was restricted to a cosine-only finite Fourier series. Joseph louis Lagrange (1736-1813) published a DFT-like formula for sine-only series in 1762. Clairaut and Lagrange were concerned with orbital mechanics and the problem of determining the details of an orbit from a finite set of observations. Consequently, their data was periodic, and they used an interpolation approach to orbit determination: in modern terminology and notation, an even periodic function f(x) which has a period of one is represented as a finite trigonometric series by
+        </p>
+        <img id="background-paragraph-two" class="formula" src="Images/formula-1.png">
+        <p id="background-paragraph-three" class="paragraph">
+            The problem is to find the coefficients {a<sub>k</sub>} from the N values of f(x) for values of x<sub>n</sub> = n/N with n = 0, 1, ..., N - 1. Gauss knew of the works of Euler and Lagrange: he borrowed their works from the library at Göttingen while a student from 1795 to 1798.
+        </p>
+        <h1 id="gauss-algorithm-for-computing-the-dft"><tt>GAUSS' ALGORITHM FOR COMPUTING THE DFT</tt><a id="algorithm-trigger" class="trigger">(hide)</a></h1>
+        <p id="algorithm-paragraph-one" class="paragraph">
+            Gauss extended this work on trigonometric interpolation to periodic functions, which are not necessarily odd or even. This was done while considering the problem of determining the orbit of certain asteroids from sample locations. These functions are expressed by a Fourier series of the form
+        </p>
+        <img id="algorithm-paragraph-two" class="formula algorithm-paragraph" src="Images/formula-2.png">
+        <p id="algorithm-paragraph-three" class="paragraph algorithm-paragraph">
+            where m = (N - 1)/2 for N odd, or m = N/2 for N even. Gauss showed in Articles 19-20 of his interpolation treatise that if one were given the values of f(x<sub>n</sub>), x<sub>n</sub> = n/N (n = 0,1, ... , N - 1), the coefficients ak and bk are given by the now well-known formulas for the DFT. This set of equations is the earliest explicit formula for the general DFT that we have found. Gauss develops his efficient algorithm by using N<sub>1</sub> equally spaced samples over one period of the signal. This set of N<sub>1</sub> samples is a subset of N total samples, where N = N<sub>1</sub>N<sub>2</sub>. Gauss computes the finite Fourier series which passes through these samples using m harmonics. He then assumes that another subset of N<sub>1</sub> equally spaced samples of the signal are measured which are offset from the original set of samples by a fraction, 1/N<sub>2</sub>, of the original sample interval where N<sub>2</sub> is a positive integer. A finite Fourier series with m harmonics is computed which passes through this new set of samples, and it is discovered that these coefficients are quite different from those computed for the original N<sub>1</sub> samples. Gauss realized the problem and proceeded to develop a method for correcting the coefficients he had already calculated, and to determine additional coefficients for the higher-frequency harmonics. Using modern terminology, we would say that the waveform was undersampled, and that therefore the coefficients were in error because of aliasing of the higher-frequency harmonics. Gauss' solution to this problem was to measure a total of N<sub>2</sub> sets of N<sub>1</sub> equally spaced samples, which together form an overall set of N = N<sub>1</sub>N<sub>2</sub> equally spaced samples. The finite Fourier series for the entire set of N samples is computed by first computing the coefficients for each of the N<sub>2</sub> sets of length N<sub>1</sub> all shifted relative to a common origin, and then computing coefficients of the N<sub>1</sub> series of length N<sub>2</sub> which are formed from the coefficients of corresponding terms in the N<sub>2</sub> sets of coefficients originally computed. A final trigonometric identity is used to convert these coefficients into the finite Fourier series coefficients for the N samples.<br>
+            Gauss did not, however, go on to quantify the computational requirements of his method to obtain the now familiar N ∑ N<sub>i</sub>, or N log(N) expression for its computational complexity. From his short excerpt, Gauss clearly developed his procedure because it was computationally efficient and because it could be applied to a select, but interesting, set of sequence lengths. Thus, Gauss' algorithm is as general and powerful as the Cooley-Tukey common-factor algorithm and is, in fact, equivalent to a decimation-in-frequency algorithm adapted' to a real data sequence. The hints used by Gauss' biographers to establish a date for this work are summarized in the accompanying table. From these facts, we infer that Gauss wrote this treatise in October-November 1805. This work predates the 1807 work of Jean Baptiste Joseph Fourier (1768-1830) on representations of functions as infinite harmonic series. Fourier did not publish his results until 1822 because his presentation to the Academy of Sciences in Paris on December 21, 1807 was not well received by Lagrange and was refused publication in the Memoirs of the Academy. One of his earlier manuscripts dates back to 1804-1805 and includes research which he may have started as early as 1802. The DFT approach to solving the orbital mechanics problem was one of several. Approaches related to Newtonian mechanics gave alternative solutions to the problem, and, in the end, came to be preferred even by Gauss. Mathematicians concerned with orbital mechanics who read his posthumous treatise in 1866 would probably not have found the technique described therein of much interest. Thus, the dated nature of the publication, its publication in Latin, and the lack of notice of Goldstine's and Burkhardt'S work contributed to the "loss" of Gauss' FFT technique until now.
+        </p>
+        <h1 id="conclusion"><tt>CONCLUSION</tt><a id="conclusion-trigger" class="trigger">(hide)</a></h1>
+        <p id="conclusion-paragraph" class="paragraph">
+            This investigation has demonstrated, once again, the virtuosity of Carl Friedrich Gauss. In addition, it has shown that certain problems can be timeless, but their solution rediscovered again and again. Burkhardt pointed out this algorithm in 1904 and Goldstine suggested the connection between Gauss and the FFT in 1977, but both of these went largely unnoticed, presumably because they were published in books dealing primarily with history. Almost one hundred years passed between the publication of Gauss' algorithm and the modern rediscovery of this approach by Cooley and Tukey.
+        </p>
+        <a href="who_is_Gauss.html"><img id="gauss-footer" src="https://github.com/Giacomo-Gobbo/giacomo-gobbo.github.io/blob/main/gauss-icona.png?raw=true"></a>
+        <footer>Created by Gobbo Giacomo</footer>
+    </body>
+</html>
+<script type="text/javascript">
+    document.getElementById("introduction-trigger").onclick = function() {
+        if (document.getElementById("introduction-paragraph-one").style.visibility == "hidden") {
+            document.getElementById("introduction-paragraph-one").style.visibility = "visible";
+            document.getElementById("quote").style.visibility = "visible";
+            document.getElementById("introduction-paragraph-three").style.visibility = "visible";
+            document.getElementById("introduction-paragraph-one").style.position = "relative";
+            document.getElementById("quote").style.position = "relative";
+            document.getElementById("introduction-paragraph-three").style.position = "relative";
+            document.getElementById("introduction-trigger").innerHTML = "(hide)";
+        } else {
+            document.getElementById("introduction-paragraph-one").style.visibility = "hidden";
+            document.getElementById("quote").style.visibility = "hidden";
+            document.getElementById("introduction-paragraph-three").style.visibility = "hidden";
+            document.getElementById("introduction-paragraph-one").style.position = "absolute";
+            document.getElementById("quote").style.position = "absolute";
+            document.getElementById("introduction-paragraph-three").style.position = "absolute";
+            document.getElementById("introduction-trigger").innerHTML = "(show)";
+        }
+    }
+    document.getElementById("background-trigger").onclick = function() {
+        if (document.getElementById("background-paragraph-one").style.visibility == "hidden") {
+            document.getElementById("background-paragraph-one").style.visibility = "visible";
+            document.getElementById("background-paragraph-two").style.visibility = "visible";
+            document.getElementById("background-paragraph-three").style.visibility = "visible";
+            document.getElementById("background-paragraph-one").style.position = "relative";
+            document.getElementById("background-paragraph-two").style.position = "relative";
+            document.getElementById("background-paragraph-three").style.position = "relative";
+            document.getElementById("background-trigger").innerHTML = "(hide)";
+        } else {
+            document.getElementById("background-paragraph-one").style.visibility = "hidden";
+            document.getElementById("background-paragraph-two").style.visibility = "hidden";
+            document.getElementById("background-paragraph-three").style.visibility = "hidden";
+            document.getElementById("background-paragraph-one").style.position = "absolute";
+            document.getElementById("background-paragraph-two").style.position = "absolute";
+            document.getElementById("background-paragraph-three").style.position = "absolute";
+            document.getElementById("background-trigger").innerHTML = "(show)";
+        }
+    }
+    document.getElementById("algorithm-trigger").onclick = function() {
+        if (document.getElementById("algorithm-paragraph-one").style.visibility == "hidden") {
+            document.getElementById("algorithm-paragraph-one").style.visibility = "visible";
+            document.getElementById("algorithm-paragraph-two").style.visibility = "visible";
+            document.getElementById("algorithm-paragraph-three").style.visibility = "visible";
+            document.getElementById("algorithm-paragraph-one").style.position = "relative";
+            document.getElementById("algorithm-paragraph-two").style.position = "relative";
+            document.getElementById("algorithm-paragraph-three").style.position = "relative";
+            document.getElementById("algorithm-trigger").innerHTML = "(hide)";
+        } else {
+            document.getElementById("algorithm-paragraph-one").style.visibility = "hidden";
+            document.getElementById("algorithm-paragraph-two").style.visibility = "hidden";
+            document.getElementById("algorithm-paragraph-three").style.visibility = "hidden";
+            document.getElementById("algorithm-paragraph-one").style.position = "absolute";
+            document.getElementById("algorithm-paragraph-two").style.position = "absolute";
+            document.getElementById("algorithm-paragraph-three").style.position = "absolute";
+            document.getElementById("algorithm-trigger").innerHTML = "(show)";
+        }
+        
+    }
+    document.getElementById("conclusion-trigger").onclick = function() {
+        if (document.getElementById("conclusion-paragraph").style.visibility == "hidden") {
+            document.getElementById("conclusion-paragraph").style.visibility = "visible";
+            document.getElementById("conclusion-paragraph").style.position = "relative";
+            document.getElementById("conclusion-trigger").innerHTML = "(hide)";
+        } else {
+            document.getElementById("conclusion-paragraph").style.visibility = "hidden";
+            document.getElementById("conclusion-paragraph").style.position = "absolute";
+            document.getElementById("conclusion-trigger").innerHTML = "(show)";
+        }
+    }
+</script>
